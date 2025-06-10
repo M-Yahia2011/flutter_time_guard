@@ -9,10 +9,10 @@ class FlutterTimeGuard {
     return await datetimeValidator.isDateTimeValid();
   }
 
-  static void onDateTimeChanged(
-   { required Function() onTimeChanged,
-    required bool stopListeingAfterFirstChange,}
-  ) => FlutterTimeGuardPlatform.instance.listenToDateTimeChange(
+  static void onDateTimeChanged({
+    required Function() onTimeChanged,
+    required bool stopListeingAfterFirstChange,
+  }) => FlutterTimeGuardPlatform.instance.listenToDateTimeChange(
     onTimeChanged,
     stopListeingAfterFirstChange,
   );
