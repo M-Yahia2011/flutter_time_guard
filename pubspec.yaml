@@ -1,7 +1,7 @@
 name: flutter_time_guard
 description: "Time guard to prevent user from change date nor time"
 version: 0.0.1
-homepage:
+homepage: https://github.com/M-Yahia2011/flutter_time_guard.git
 
 environment:
   sdk: ^3.8.1
