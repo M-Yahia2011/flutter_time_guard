@@ -43,7 +43,7 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      FlutterTimeGuard.onDateTimeChanged(
+      FlutterTimeGuard.listenToDateTimeChange(
         onTimeChanged: () {
           showAdaptiveDialog(
             context: context,

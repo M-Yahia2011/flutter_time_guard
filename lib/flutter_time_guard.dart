@@ -9,7 +9,7 @@ class FlutterTimeGuard {
     return await datetimeValidator.isDateTimeValid();
   }
 
-  static void onDateTimeChanged({
+  static void listenToDateTimeChange({
     required Function() onTimeChanged,
     required bool stopListeingAfterFirstChange,
   }) => FlutterTimeGuardPlatform.instance.listenToDateTimeChange(

@@ -1,11 +1,16 @@
 name: flutter_time_guard
-description: "Time guard to prevent user from change date nor time"
+description: Flutter Time Guard is used to detect system time changes and validate device time using NTP, ensuring reliable and secure time-sensitive operations.
 version: 0.0.1
 homepage: https://github.com/M-Yahia2011/flutter_time_guard.git
+repository: https://github.com/M-Yahia2011/flutter_time_guard
+issue_tracker: https://github.com/M-Yahia2011/flutter_time_guard/issues
+documentation: https://github.com/M-Yahia2011/flutter_time_guard#readme
+
+
 
 environment:
   sdk: ^3.8.1
-  flutter: '>=3.3.0'
+  flutter: ">=3.3.0"
 
 dependencies:
   dartz: ^0.10.1
@@ -45,6 +50,11 @@ flutter:
         pluginClass: FlutterTimeGuardPlugin
 
 topics:
-  - date/time
-  - datetime change
-  - hacking
+  - time
+  - ntp
+  - datetime
+  - DateTime.now()
+  - security
+  - system clock
+
+license: MIT
