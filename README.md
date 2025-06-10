@@ -1,10 +1,8 @@
-# flutter_time_guard
+# 🛡️ Flutter Time Guard 🛡️
 
 A Flutter plugin to **detect system date/time changes** and **validate device time** against NTP (Network Time Protocol).
 
 Ideal for time-sensitive applications like authentication, licenses, time tracking, and fraud prevention.
-
----
 
 ## ✨ Features
 
@@ -14,8 +12,6 @@ Ideal for time-sensitive applications like authentication, licenses, time tracki
 - 💡 Fallback support for offline stored NTP time
 - 🟢 Supports Android & iOS
 
----
-
 ## 🔧 Installation
 
 Add to your `pubspec.yaml`:
@@ -23,36 +19,32 @@ Add to your `pubspec.yaml`:
 ```yaml
 dependencies:
   flutter_time_guard: ^0.0.1
+```
 Then run:
 flutter pub get
 
-## 🛠 Platform Support
-| Platform | Supported |
-| -------- | --------- |
-| Android  | ✅         |
-| iOS      | ✅         |
-| Web      | ❌         |
-| macOS    | ❌         |
-| Windows  | ❌         |
-| Linux    | ❌         |
 
 ## 🚀 Usage
 1. Validate System Time
+```
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
 final isValid = await FlutterTimeGuard.isDateTimeValid(toleranceInSeconds: 10);
 print('Is time valid? $isValid');
+```
 
 2. Listen to Manual Date/Time Changes
-FlutterTimeGuard.onDateTimeChanged(
-  () {
+```
+FlutterTimeGuard.listenToDateTimeChange(
+ onTimeChanged: () {
     // Show a warning dialog or alert user
     print('User manually changed the system time.');
   },
   true, // stop listening after first change
 );
-
+```
 ## 💡 Example
+```
 import 'package:flutter/material.dart';
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
@@ -98,7 +90,7 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      FlutterTimeGuard.onDateTimeChanged(
+      FlutterTimeGuard.listenToDateTimeChange(
         onTimeChanged: () {
           showAdaptiveDialog(
             context: context,
@@ -157,16 +149,17 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
     );
   }
 }
+```
 
 ## 🧪 TODO
  - Add unit and integration tests
  - Provide more configuration options
 
-## 📄 License
-MIT License
+
 
 ## 🙌 Contributions
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## 📬 Contact
+Check my profile.
 
