@@ -53,8 +53,7 @@ topics:
   - time
   - ntp
   - datetime
-  - DateTime.now()
   - security
-  - system clock
+  - system time
 
 license: MIT
