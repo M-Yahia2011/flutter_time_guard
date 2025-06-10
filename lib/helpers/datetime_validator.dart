@@ -13,10 +13,14 @@ import '../core/interfaces/local_data_source_impl.dart';
 class DatetimeValidator {
   DatetimeValidator._();
   static final DatetimeValidator _instance = DatetimeValidator._();
-  factory DatetimeValidator() => _instance;
+  /// Returns the singlton of the class.
+  factory DatetimeValidator() => _instance; 
 
+  /// Dio is used to make the network request to the NTP server.
   final Dio dio = Dio();
+  /// LocalDataSource is used to get/set the network time from the device.
   final ILocalDataSource localDataSource = LocalDataSource();
+  /// It is the time that is used to validate the current system time.
   late DateTime? networkTime;
 
   /// Returns true if the device time is valid, false otherwise.

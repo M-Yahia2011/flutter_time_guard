@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../helpers/failure.dart';
 import 'ilocal_data_source.dart';
 
+/// Implementation of the local data source interface using Flutter Secure Storage.
 class LocalDataSource implements ILocalDataSource {
   @override
   Future<Either<Failure, DateTime?>> getStoredNetworkTime() async {

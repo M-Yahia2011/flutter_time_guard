@@ -2,6 +2,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'flutter_time_guard_method_channel.dart';
 
+/// Interface for interacting with the FlutterTimeGuard plugin.
 abstract class FlutterTimeGuardPlatform extends PlatformInterface {
   /// Constructs a FlutterTimeGuardPlatform.
   FlutterTimeGuardPlatform() : super(token: _token);
@@ -23,6 +24,8 @@ abstract class FlutterTimeGuardPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+ 
+ /// Listen to changes in the system time done by the user, using a channel.
   void listenToDateTimeChange(
     Function() onTimeChanged,
     bool stopListeingAfterFirstChange,

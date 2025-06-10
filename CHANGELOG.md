@@ -3,3 +3,6 @@
 - Initial release.
 - Detects manual system time/date changes.
 - Validates device time using NTP.
+
+## 0.0.2
+- Adding prober documentation.
