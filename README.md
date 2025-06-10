@@ -40,7 +40,7 @@ FlutterTimeGuard.listenToDateTimeChange(
     // Show a warning dialog or alert user
     print('User manually changed the system time.');
   },
-  true, // stop listening after first change
+  stopListeingAfterFirstChange:true, // stop listening after first change
 );
 ```
 ## 💡 Example
