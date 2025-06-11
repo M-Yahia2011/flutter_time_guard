@@ -6,11 +6,13 @@ Ideal for time-sensitive applications like authentication, licenses, time tracki
 
 ## ✨ Features
 
-- ⏰ Detect manual changes to the device's date or time
+- ⏰ Detect manual changes to the device's date or time.
 - 🌐 Validate device time against reliable NTP servers
-- ⚙️ Customizable tolerance for time deviation
-- 💡 Fallback support for offline stored NTP time
-- 🟢 Supports Android & iOS
+  with customizable tolerance for time deviation.
+
+![Demo](https://raw.githubusercontent.com/M-Yahia2011/flutter_time_guard/main/example/assets/demo.gif)
+
+
 
 ## 🔧 Installation
 
