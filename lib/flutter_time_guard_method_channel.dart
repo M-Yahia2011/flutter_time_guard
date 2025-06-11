@@ -9,7 +9,7 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('time_change_listener');
 
-/// isChanged is used to stop listening to time changes after the first change. (Lock)
+  /// isChanged is used to stop listening to time changes after the first change. (Lock)
   bool isChanged = false;
   @override
   void listenToDateTimeChange(
@@ -23,7 +23,7 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
           return;
         }
         isChanged = true;
-        onTimeChanged(); 
+        onTimeChanged();
       }
     });
   }

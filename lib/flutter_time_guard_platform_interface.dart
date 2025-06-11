@@ -24,8 +24,7 @@ abstract class FlutterTimeGuardPlatform extends PlatformInterface {
     _instance = instance;
   }
 
- 
- /// Listen to changes in the system time done by the user, using a channel.
+  /// Listen to changes in the system time done by the user, using a channel.
   void listenToDateTimeChange(
     Function() onTimeChanged,
     bool stopListeingAfterFirstChange,
