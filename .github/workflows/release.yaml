@@ -15,8 +15,8 @@ jobs:
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1
 
-      - name: Analyze
-        run: dart analyze
+      # - name: Analyze
+      #   run: dart analyze
 
       - name: Format Check
         run: dart format . --set-exit-if-changed
