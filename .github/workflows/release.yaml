@@ -1,1 +1,30 @@
+on:
+  push:
+    branches:
+      - main
+    # Only run if commit message contains "release"
+    # This uses a path filter + custom `if` in the job
+jobs:
+  release:
+    if: contains(github.event.head_commit.message, 'release')
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Analyze
+        run: dart analyze
+
+      - name: Format Check
+        run: dart format . --set-exit-if-changed
+
+      - name: Dry Run Publish
+        run: flutter pub publish --dry-run
+
+      - name: Bump version, commit, tag and push
+        run: |
+          # Example bump version logic here (replace with your script)
+          echo "Bumping version and tagging..."
