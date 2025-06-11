@@ -2,8 +2,7 @@ name: Flutter Plugin Auto Release
 
 on:
   push:
-    branches:
-      - main # Change this if your default branch is different
+    branches: [test-release-workflow]
 
 jobs:
   release:
