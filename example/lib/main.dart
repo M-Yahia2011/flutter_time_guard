@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
 void main() {
-  runApp(const MyApp());
+  try {
+    runApp(const MyApp());
+  } catch (e) {
+    print(e);
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -10,7 +14,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: TimeGuardDemoPage());
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: TimeGuardDemoPage(),
+    );
   }
 }
 
@@ -44,8 +51,8 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FlutterTimeGuard.listenToDateTimeChange(
-        onTimeChanged: () {
-          showAdaptiveDialog(
+        onTimeChanged: () async {
+          await showAdaptiveDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: const Text(
