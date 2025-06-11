@@ -1,30 +1,47 @@
+name: Flutter Plugin Release
+
 on:
   push:
     branches:
       - main
-    # Only run if commit message contains "release"
-    # This uses a path filter + custom `if` in the job
+  workflow_dispatch: # ✅ Allow manual trigger
+
 jobs:
   release:
-    if: contains(github.event.head_commit.message, 'release')
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, 'release')
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Setup Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
 
-      # - name: Analyze
-      #   run: dart analyze
+      - name: Get dependencies
+        run: flutter pub get
 
-      - name: Format Check
+      - name: Get dependencies for example
+        run: |
+          cd example
+          flutter pub get
+
+      - name: Analyze (excluding tests)
+        run: dart analyze lib example/lib
+
+      - name: Format check
         run: dart format . --set-exit-if-changed
 
-      - name: Dry Run Publish
+      - name: Dry run publish
         run: flutter pub publish --dry-run
 
-      - name: Bump version, commit, tag and push
+      - name: Bump version, commit, tag, and push (placeholder)
         run: |
-          # Example bump version logic here (replace with your script)
-          echo "Bumping version and tagging..."
+          echo "This is where you'd bump the version and tag."
+          # Example:
+          # sed -i 's/version: 1.0.0/version: 1.0.1/' pubspec.yaml
+          # git config user.name "GitHub Actions"
+          # git config user.email "actions@github.com"
+          # git comm
