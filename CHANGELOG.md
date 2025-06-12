@@ -9,3 +9,6 @@
 
 ## 0.0.3
 - Adding demo.
+
+## 0.0.4
+- fix demo.
