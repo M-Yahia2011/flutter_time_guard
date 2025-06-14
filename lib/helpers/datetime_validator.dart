@@ -1,11 +1,9 @@
 import 'dart:async';
-
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_time_guard/core/result.dart';
 import 'package:ntp/ntp.dart';
 import '../core/interfaces/ilocal_data_source.dart';
-import '../core/interfaces/local_data_source_impl.dart';
+import '../core/local_data_source_impl.dart';
 
 /// This class is used to check if the device time is valid or not
 ///  by comparing it with the network time.
@@ -16,9 +14,6 @@ class DatetimeValidator {
 
   /// Returns the singlton of the class.
   factory DatetimeValidator() => _instance;
-
-  /// Dio is used to make the network request to the NTP server.
-  final Dio dio = Dio();
 
   /// LocalDataSource is used to get/set the network time from the device.
   final ILocalDataSource localDataSource = LocalDataSource();
@@ -57,11 +52,13 @@ class DatetimeValidator {
   }
 
   Future<DateTime?> _getNetworkTimeStoredOffline() async {
-    DateTime? storedNetworkTime;
-    Either result = await localDataSource.getStoredNetworkTime();
-    result.fold((failure) {}, (res) {
-      storedNetworkTime = res;
-    });
-    return storedNetworkTime;
+    final Result<DateTime?> result = await localDataSource
+        .getStoredNetworkTime();
+    if (result is Error) {
+      return null;
+    } else if (result is Ok) {
+      return (result as Ok).value;
+    }
+    return null;
   }
 }

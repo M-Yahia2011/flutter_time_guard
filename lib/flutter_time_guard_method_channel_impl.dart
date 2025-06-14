@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'flutter_time_guard_platform_interface.dart';
+import 'core/interfaces/flutter_time_guard_platform_interface.dart';
 
 /// An implementation of [FlutterTimeGuardPlatform] that uses method channels.
 class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {

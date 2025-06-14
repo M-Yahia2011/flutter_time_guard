@@ -1,6 +1,6 @@
 import 'helpers/datetime_validator.dart';
 
-import 'flutter_time_guard_platform_interface.dart';
+import 'core/interfaces/flutter_time_guard_platform_interface.dart';
 
 /// use FlutterTimeGuard to listen to changes in the system time and validate current system time
 class FlutterTimeGuard {

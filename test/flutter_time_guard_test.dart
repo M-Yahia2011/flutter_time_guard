@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 // import 'package:flutter_time_guard/flutter_time_guard.dart';
-import 'package:flutter_time_guard/flutter_time_guard_platform_interface.dart';
-import 'package:flutter_time_guard/flutter_time_guard_method_channel.dart';
+import 'package:flutter_time_guard/core/interfaces/flutter_time_guard_platform_interface.dart';
+import 'package:flutter_time_guard/flutter_time_guard_method_channel_impl.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterTimeGuardPlatform

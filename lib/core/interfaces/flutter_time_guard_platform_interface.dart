@@ -1,6 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'flutter_time_guard_method_channel.dart';
+import '../../flutter_time_guard_method_channel_impl.dart';
 
 /// Interface for interacting with the FlutterTimeGuard plugin.
 abstract class FlutterTimeGuardPlatform extends PlatformInterface {

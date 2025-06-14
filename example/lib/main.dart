@@ -5,7 +5,7 @@ void main() {
   try {
     runApp(const MyApp());
   } catch (e) {
-    print(e);
+    debugPrint(e.toString());
   }
 }
 
