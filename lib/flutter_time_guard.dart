@@ -12,11 +12,17 @@ class FlutterTimeGuard {
 
   /// Check if the current system time is valid by comparing it to NTP.
   /// Returns true if the current system time is valid, false otherwise.
-  static Future<bool> isDateTimeValid() async =>
-      await _datetimeValidator.isDateTimeValid();
+  /// [toleranceInSeconds] is the maximum difference in seconds between the device time and the network time (the real time).
+  ///
+  static Future<bool> isDateTimeValid({int toleranceInSeconds = 5}) async =>
+      await _datetimeValidator.isDateTimeValid(
+        toleranceInSeconds: toleranceInSeconds,
+      );
 
   /// Listen to changes in the system time done by the user in background and ignores
   /// the system automatic changes to time which is done to synchronize with the network time.
+  /// [stopListeingAfterFirstChange] if true, the listener will stop listening after the first change.
+  /// you can use this if you want to show  non-dismissable dialogs when the time is changed to prevent pushing dialogs on top of each other.
   static void listenToDateTimeChange({
     required Function() onTimeChanged,
     required bool stopListeingAfterFirstChange,

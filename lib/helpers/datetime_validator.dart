@@ -54,10 +54,13 @@ class DatetimeValidator {
   Future<DateTime?> _getNetworkTimeStoredOffline() async {
     final Result<DateTime?> result = await localDataSource
         .getStoredNetworkTime();
+
     if (result is Error) {
       return null;
     } else if (result is Ok) {
-      return (result as Ok).value;
+      var r = result as Ok;
+      debugPrint('Stored NTP time: ${r.value}');
+      return r.value;
     }
     return null;
   }

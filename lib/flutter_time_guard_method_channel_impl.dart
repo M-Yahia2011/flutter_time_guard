@@ -23,7 +23,7 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
           return;
         }
         isChanged = true;
-        onTimeChanged();
+        await onTimeChanged();
       }
     });
   }
