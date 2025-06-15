@@ -12,3 +12,7 @@
 
 ## 0.0.4
 - fix demo.
+
+## 0.0.5
+- expose tolerenceInSeconds Parameter.
+- refactor and cleaning unnecessary packages.
