@@ -15,8 +15,9 @@ class FlutterTimeGuardPlugin : FlutterPlugin {
     private lateinit var receiver: BroadcastReceiver
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        context = binding.applicationContext
         channel = MethodChannel(binding.binaryMessenger, "time_change_listener")
+
+        context = binding.applicationContext
 
         // Create BroadcastReceiver inside plugin
         receiver = object : BroadcastReceiver() {
@@ -45,3 +46,11 @@ class FlutterTimeGuardPlugin : FlutterPlugin {
         channel.setMethodCallHandler(null)
     }
 }
+
+/*
+--------------------------------------------------------------------------------------------------
+| Fn                       | Purpose                                                             |
+| ------------------------ | --------------------------------------------------------------------|
+| * IntentFilter (outside) | Tells Android what events the app wants to listen to                |
+| * onReceive (inside)     | Lets me decide what to do when i get one of those events (callback) |
+ */

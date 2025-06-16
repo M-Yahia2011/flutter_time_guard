@@ -52,6 +52,7 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FlutterTimeGuard.listenToDateTimeChange(
+        stopListeingAfterFirstChange: false,
         onTimeChanged: () async {
           await showAdaptiveDialog(
             context: context,
@@ -73,7 +74,6 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
             ),
           );
         },
-        stopListeingAfterFirstChange: true,
       );
     });
   }

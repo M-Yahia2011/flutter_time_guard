@@ -16,3 +16,7 @@
 ## 0.0.5
 - expose tolerenceInSeconds Parameter.
 - refactor and cleaning unnecessary packages.
+
+## 0.0.6
+- including time zone changes.
+- cleanup.

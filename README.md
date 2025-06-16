@@ -1,6 +1,6 @@
 # 🛡️ Flutter Time Guard 🛡️
 
-A Flutter plugin to **detect system date/time changes** and **validate device time** against NTP (Network Time Protocol).
+A Flutter plugin to **detect system Date/Time and Time zone changes** and **validate device time** against NTP (Network Time Protocol).
 
 Ideal for time-sensitive applications like authentication, licenses, time tracking, and fraud prevention.
 
@@ -13,29 +13,22 @@ Ideal for time-sensitive applications like authentication, licenses, time tracki
 ![Demo](https://raw.githubusercontent.com/M-Yahia2011/flutter_time_guard/main/example/assets/demo.gif)
 
 
-
 ## 🔧 Installation
 
-Add to your `pubspec.yaml`:
-
 ```yaml
-dependencies:
-  flutter_time_guard: ^0.0.1
+flutter pub add flutter_time_guard
 ```
-Then run:
-flutter pub get
-
 
 ## 🚀 Usage
 1. Validate System Time
 ```
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
-final isValid = await FlutterTimeGuard.isDateTimeValid(toleranceInSeconds: 10);
+final isValid = await FlutterTimeGuard.isDateTimeValid(toleranceInSeconds: 10); 
 print('Is time valid? $isValid');
 ```
 
-2. Listen to Manual Date/Time Changes
+2. Listen to Manual Date/Time and Time zone Changes
 ```
 FlutterTimeGuard.listenToDateTimeChange(
  onTimeChanged: () {
@@ -76,7 +69,7 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
 
   Future<void> _checkTimeValidity() async {
     setState(() => _isLoading = true);
-    final result = await FlutterTimeGuard.isDateTimeValid();
+    final result = await FlutterTimeGuard.isDateTimeValid(); 
     setState(() {
       _isValid = result;
       _isLoading = false;

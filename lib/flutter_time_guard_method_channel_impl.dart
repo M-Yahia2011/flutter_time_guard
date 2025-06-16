@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 
 import 'core/interfaces/flutter_time_guard_platform_interface.dart';
 
-/// An implementation of [FlutterTimeGuardPlatform] that uses method channels.
+/// A platform-specific implementation of [FlutterTimeGuardPlatform] using method channels.
 class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
-  /// The method channel used to interact with the native platform.
+  /// The method channel used to communicate with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('time_change_listener');
 
-  /// isChanged is used to stop listening to time changes after the first change. (Lock)
+  /// Tracks whether a time change has already been detected.
+  /// Used to prevent handling multiple callbacks when [stopListeningAfterFirstChange] is true. (Lock)
   bool isChanged = false;
   @override
   void listenToDateTimeChange(

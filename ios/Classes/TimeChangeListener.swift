@@ -26,11 +26,11 @@ class TimeChangeListener {
       name: NSNotification.Name.NSSystemClockDidChange,
       object: nil)
 
-    // NotificationCenter.default.addObserver(
-    //     self,
-    //     selector: #selector(systemTimeZoneDidChange),
-    //     name: NSNotification.Name.NSSystemTimeZoneDidChange,
-    //     object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(systemTimeZoneDidChange),
+      name: NSNotification.Name.NSSystemTimeZoneDidChange,
+      object: nil)
   }
   @objc private func systemClockDidChange() {
 
@@ -42,10 +42,13 @@ class TimeChangeListener {
     methodChannel.invokeMethod("onTimeChanged", arguments: nil)
   }
 
-  // @objc private func systemTimeZoneDidChange() {
-  //     print("System timezone changed")
-  //     methodChannel.invokeMethod("onTimeChanged", arguments: nil)
-  // }
+  @objc private func systemTimeZoneDidChange() {
+    guard UIApplication.shared.applicationState != .active else {
+      return  // Ignore if app is in foreground
+    }
+    print("System timezone changed")
+    methodChannel.invokeMethod("onTimeChanged", arguments: nil)
+  }
 
   deinit {
     NotificationCenter.default.removeObserver(self)
