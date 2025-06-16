@@ -21,6 +21,6 @@
 - including time zone changes.
 - cleanup.
 
-## 0.0.7
+## 1.0.0
 - Adding a foreground automatic changes guard for android.
 - Markinh plugin as production-ready.
