@@ -1,8 +1,10 @@
-# 🔻 Flutter Time Guard 🔻
+# 🛡 Flutter Time Guard 🛡
 
 A Flutter plugin to **detect system Date/Time and Time zone changes** and **validate device time** against NTP (Network Time Protocol).
 
 Ideal for time-sensitive applications like authentication, licenses, time tracking, and fraud prevention.
+
+🔻 **لا تنس أهل غـ.ـزة من دعائك**🔻
 
 ## ✨ Features
 
