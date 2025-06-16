@@ -5,17 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodChannel
 
-class FlutterTimeGuardPlugin : FlutterPlugin {
+class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
 
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
     private lateinit var receiver: BroadcastReceiver
+    private var isAppInForeground = false
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "time_change_listener")
+        // Observe lifecycle
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
         context = binding.applicationContext
 
@@ -27,6 +33,10 @@ class FlutterTimeGuardPlugin : FlutterPlugin {
                     action == Intent.ACTION_TIMEZONE_CHANGED ||
                     action == Intent.ACTION_DATE_CHANGED) {
                     Log.d("FlutterTimeGuardPlugin", "Time change detected: $action")
+
+                // Return if app is in foreground to prevent automatic changes from triggering the callback
+                    if (isAppInForeground) return
+
                     channel.invokeMethod("onTimeChanged", null)
                 }
             }
@@ -44,6 +54,15 @@ class FlutterTimeGuardPlugin : FlutterPlugin {
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         context.unregisterReceiver(receiver)
         channel.setMethodCallHandler(null)
+    }
+
+    // Lifecycle callbacks
+    override fun onStart(owner: LifecycleOwner) {
+        isAppInForeground = true
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        isAppInForeground = false
     }
 }
 
