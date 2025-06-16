@@ -4,7 +4,7 @@ A Flutter plugin to **detect system Date/Time and Time zone changes** and **vali
 
 Ideal for time-sensitive applications like authentication, licenses, time tracking, and fraud prevention.
 
-🔻 **لا تغفل عن أهلك في غـ.ـزة في دعائك**🔻
+<center>🔻 **لا تغفل عن أهلك في غـ.ـزة في دعائك**🔻</center>
 
 ## ✨ Features
 
