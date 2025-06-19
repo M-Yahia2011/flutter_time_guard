@@ -10,60 +10,79 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodChannel
-
 class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
 
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
-    private lateinit var receiver: BroadcastReceiver
-    private var isAppInForeground = false
+    private lateinit var timeChangeReceiver: BroadcastReceiver
+    private lateinit var screenStateReceiver: BroadcastReceiver
+    private var isAppInBackground = false
+    private var isScreenOn = true
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "time_change_listener")
-        // Observe lifecycle
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-
         context = binding.applicationContext
 
-        // Create BroadcastReceiver inside plugin
-        receiver = object : BroadcastReceiver() {
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+
+        // Time change receiver
+        timeChangeReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val action = intent?.action ?: return
                 if (action == Intent.ACTION_TIME_CHANGED ||
                     action == Intent.ACTION_TIMEZONE_CHANGED ||
                     action == Intent.ACTION_DATE_CHANGED) {
+
                     Log.d("FlutterTimeGuardPlugin", "Time change detected: $action")
 
-                // Return if app is in foreground to prevent automatic changes from triggering the callback
-                    if (isAppInForeground) return
-
-                    channel.invokeMethod("onTimeChanged", null)
+                    if (shouldNotify()) {
+                        channel.invokeMethod("onTimeChanged", null)
+                    }
+                   
                 }
             }
         }
 
-        // Register receiver with intent filter
-        val filter = IntentFilter().apply {
+        val timeChangeFilter = IntentFilter().apply {
             addAction(Intent.ACTION_TIME_CHANGED)
             addAction(Intent.ACTION_TIMEZONE_CHANGED)
             addAction(Intent.ACTION_DATE_CHANGED)
         }
-        context.registerReceiver(receiver, filter)
+        context.registerReceiver(timeChangeReceiver, timeChangeFilter)
+
+        // Screen state receiver
+        screenStateReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val action = intent?.action ?: return
+                isScreenOn = action == Intent.ACTION_SCREEN_ON
+                Log.d("FlutterTimeGuardPlugin", "Screen state changed: ${if (isScreenOn) "ON" else "OFF"}")
+            }
+        }
+
+        val screenFilter = IntentFilter().apply {
+            addAction(Intent.ACTION_SCREEN_ON)
+            addAction(Intent.ACTION_SCREEN_OFF)
+        }
+        context.registerReceiver(screenStateReceiver, screenFilter)
     }
 
-    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        context.unregisterReceiver(receiver)
-        channel.setMethodCallHandler(null)
-    }
-
-    // Lifecycle callbacks
     override fun onStart(owner: LifecycleOwner) {
-        isAppInForeground = true
+        isAppInBackground = false
     }
 
     override fun onStop(owner: LifecycleOwner) {
-        isAppInForeground = false
+        isAppInBackground = true
     }
+    private fun shouldNotify(): Boolean {
+        return isAppInBackground || isScreenOn
+    }
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        context.unregisterReceiver(timeChangeReceiver)
+        context.unregisterReceiver(screenStateReceiver)
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
+        channel.setMethodCallHandler(null)
+    }
+
 }
 
 /*
