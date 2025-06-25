@@ -1,3 +1,5 @@
+## 1.0.1
+- Adding guards on screen state
 ## 1.0.0
 - Added automatic foreground time change detection for Android.
 - Marked plugin as production-ready.
@@ -23,3 +25,4 @@
 - Initial release.
 - Detected manual system time/date changes.
 - Validated device time using NTP.
+
