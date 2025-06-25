@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.1.0
 - Adding guards on screen state
 ## 1.0.0
 - Added automatic foreground time change detection for Android.
