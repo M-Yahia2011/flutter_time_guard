@@ -1,4 +1,15 @@
+[![Stand With Palestine](https://raw.githubusercontent.com/TheBSD/StandWithPalestine/main/banner-no-action.svg)](https://thebsd.github.io/StandWithPalestine)
+
 # 🛡 Flutter Time Guard 🛡
+	
+  <a href="https://github.com/syedmurtaza108/chucker-flutter/"><img src="https://codecov.io/gh/syedmurtaza108/chucker-flutter/branch/master/graph/badge.svg?token=PGXJ24DQR4" alt="Codecov Badge"></a>
+	<a href="https://pub.dev/packages/chucker_flutter"><img src="https://img.shields.io/pub/v/chucker_flutter" alt="Pub.dev Badge"></a>
+	<a href="https://pub.dev/packages/chucker_flutter"><img src="https://badgen.net/pub/popularity/chucker_flutter" alt="Popularity"></a>
+	<a href="https://github.com/syedmurtaza108/chucker-flutter/actions"><img src="https://github.com/syedmurtaza108/chucker-flutter/actions/workflows/build.yaml/badge.svg" alt="GitHub Build Badge"></a>
+	<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="MIT License Badge"></a>
+	<a href="https://github.com/syedmurtaza108/chucker-flutter"><img src="https://img.shields.io/badge/platform-flutter-ff69b4.svg" alt="Flutter Platform Badge"></a>
+	<a href="https://github.com/syedmurtaza108/chucker-flutter"><img src="https://img.shields.io/github/stars/syedmurtaza108/chucker-flutter?logo=github&logoColor=white" alt="Stars"></a>
+	<a href="https://syedmurtaza.site"><img src="https://img.shields.io/badge/Developed%20By-Syed%20Murtaza-brightgreen" alt="Developed By Badge"></a>
 
 A Flutter plugin to **detect system Date/Time and Time zone changes** and **validate device time** against NTP (Network Time Protocol).
 
@@ -14,7 +25,6 @@ Ideal for time-sensitive applications like authentication, licenses, time tracki
 
 ![Demo](https://raw.githubusercontent.com/M-Yahia2011/flutter_time_guard/main/example/assets/demo.gif)
 
-
 ## 🔧 Installation
 
 ```yaml
@@ -22,15 +32,18 @@ flutter pub add flutter_time_guard
 ```
 
 ## 🚀 Usage
+
 1. Validate System Time
+
 ```
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
-final isValid = await FlutterTimeGuard.isDateTimeValid(toleranceInSeconds: 10); 
+final isValid = await FlutterTimeGuard.isDateTimeValid(toleranceInSeconds: 10);
 print('Is time valid? $isValid');
 ```
 
 2. Listen to Manual Date/Time and Time zone Changes
+
 ```
 FlutterTimeGuard.listenToDateTimeChange(
  onTimeChanged: () {
@@ -40,7 +53,9 @@ FlutterTimeGuard.listenToDateTimeChange(
   stopListeingAfterFirstChange:true, // stop listening after first change
 );
 ```
+
 ## 💡 Example
+
 ```
 import 'package:flutter/material.dart';
 import 'package:flutter_time_guard/flutter_time_guard.dart';
@@ -71,7 +86,7 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
 
   Future<void> _checkTimeValidity() async {
     setState(() => _isLoading = true);
-    final result = await FlutterTimeGuard.isDateTimeValid(); 
+    final result = await FlutterTimeGuard.isDateTimeValid();
     setState(() {
       _isValid = result;
       _isLoading = false;
@@ -149,14 +164,14 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
 ```
 
 ## 🧪 TODO
- - Add unit and integration tests
- - Provide more configuration options
 
-
+- Add unit and integration tests
+- Provide more configuration options
 
 ## 🙌 Contributions
+
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## 📬 Contact
-[Check my profile](https://github.com/M-Yahia2011)
 
+[Check my profile](https://github.com/M-Yahia2011)
