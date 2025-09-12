@@ -1,6 +1,6 @@
 [![Stand With Palestine](https://raw.githubusercontent.com/TheBSD/StandWithPalestine/main/banner-no-action.svg)](https://thebsd.github.io/StandWithPalestine)
 
-# 🛡 Flutter Time Guard 🛡
+ <center># 🛡 Flutter Time Guard 🛡</center>
 	
   <a href="https://github.com/syedmurtaza108/chucker-flutter/"><img src="https://codecov.io/gh/syedmurtaza108/chucker-flutter/branch/master/graph/badge.svg?token=PGXJ24DQR4" alt="Codecov Badge"></a>
 	<a href="https://pub.dev/packages/chucker_flutter"><img src="https://img.shields.io/pub/v/chucker_flutter" alt="Pub.dev Badge"></a>
@@ -15,8 +15,6 @@ A Flutter plugin to **detect system Date/Time and Time zone changes** and **vali
 
 Ideal for time-sensitive applications like authentication, licenses, time tracking, and fraud prevention.
 
- <center> 🔻لا تغفل عن إخوانك في دعائك🔻</center>
- 
 ## ✨ Features
 
 - ⏰ Detect manual changes to the device's date or time.
