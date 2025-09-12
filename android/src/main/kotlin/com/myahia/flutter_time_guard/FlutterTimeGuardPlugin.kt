@@ -74,7 +74,7 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
         isAppInBackground = true
     }
     private fun shouldNotify(): Boolean {
-        return isAppInBackground || isScreenOn
+        return isAppInBackground &&  isScreenOn
     }
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         context.unregisterReceiver(timeChangeReceiver)
