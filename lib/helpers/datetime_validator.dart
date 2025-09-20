@@ -26,7 +26,7 @@ class DatetimeValidator {
   ///
   /// Returns `true` if the difference between the device time and the network time
   /// is within the specified [toleranceInSeconds]. Defaults to 5 seconds.
-  Future<bool> isDateTimeValid({int toleranceInSeconds = 5}) async {
+  Future<bool> isDateTimeValid({int toleranceInSeconds = 600}) async {
     networkTime = await _getNetworkTime();
     DateTime deviceTime = DateTime.now();
     debugPrint('Device time: $deviceTime');
@@ -44,9 +44,17 @@ class DatetimeValidator {
   /// Falls back to locally stored NTP time if fetching fails.
   Future<DateTime?> _getNetworkTime() async {
     try {
-      DateTime ntpTime = await NTP.now();
-      localDataSource.storeNetworkTime(networkTime: ntpTime);
+      DateTime ntpTime = await NTP.now().timeout(
+        const Duration(seconds: 5), // Configurable timeout
+        onTimeout: () {
+          debugPrint('NTP request timed out after 5 seconds');
+          throw TimeoutException('NTP request timed out', const Duration(seconds: 5));
+        },
+      );
+
       debugPrint('Network time: $ntpTime');
+      
+      localDataSource.storeNetworkTime(networkTime: ntpTime);
       return ntpTime;
     } catch (e) {
       DateTime? storedNTPTime = await _getNetworkTimeStoredOffline();

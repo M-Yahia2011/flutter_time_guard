@@ -21,7 +21,7 @@ class FlutterTimeGuard {
   /// [toleranceInSeconds] defines the maximum allowed difference, in seconds,
   /// between the device's time and the accurate network time.
 
-  static Future<bool> isDateTimeValid({int toleranceInSeconds = 5}) async =>
+  static Future<bool> isDateTimeValid({int toleranceInSeconds = 600}) async =>
       await _datetimeValidator.isDateTimeValid(
         toleranceInSeconds: toleranceInSeconds,
       );
