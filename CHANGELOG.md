@@ -1,7 +1,12 @@
+## 1.2.1
+- Fixed stuck on NTP.now().
+
 ## 1.2.0
 - Fixed trigger on Android.
+
 ## 1.1.0
 - Adding guards on screen state.
+
 ## 1.0.0
 - Added automatic foreground time change detection for Android.
 - Marked plugin as production-ready.
