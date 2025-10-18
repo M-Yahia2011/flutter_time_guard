@@ -52,15 +52,16 @@ class DatetimeValidator {
   Future<DateTime?> _getNetworkTime() async {
     try {
       DateTime ntpTime = await NTP.now().timeout(
-        const Duration(seconds: 20), 
+        const Duration(seconds: 20),
         onTimeout: () {
           safeLog('NTP request timed out after 20 seconds');
-          throw TimeoutException('NTP request timed out', const Duration(seconds: 5));
+          throw TimeoutException(
+              'NTP request timed out', const Duration(seconds: 5));
         },
       );
 
       safeLog('Network time: $ntpTime');
-      
+
       localDataSource.storeNetworkTime(networkTime: ntpTime);
       return ntpTime;
     } catch (e) {

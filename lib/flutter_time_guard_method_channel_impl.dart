@@ -43,5 +43,4 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
       rethrow;
     }
   }
-
 }

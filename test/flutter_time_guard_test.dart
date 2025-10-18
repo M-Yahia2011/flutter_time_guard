@@ -137,11 +137,11 @@ void main() {
 
     setUp(() {
       methodChannelImplementation = MethodChannelFlutterTimeGuard();
-      messenger = TestDefaultBinaryMessengerBinding
-          .instance.defaultBinaryMessenger;
+      messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
       receivedCalls = <MethodCall>[];
       messenger.setMockMethodCallHandler(channel, (MethodCall call) async {
-       return receivedCalls.add(call);
+        return receivedCalls.add(call);
       });
     });
 

@@ -56,7 +56,7 @@ class FlutterTimeGuard {
       );
 
   /// Reset the time guard state on both Flutter and native sides.
-  /// 
+  ///
   /// This resets tracking state and allows new notifications to be triggered.
   /// Useful when:
   /// - User logs in/out
