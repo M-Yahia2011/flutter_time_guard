@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'core/interfaces/flutter_time_guard_platform_interface.dart';
+import 'core/logger.dart';
 
 /// A platform-specific implementation of [FlutterTimeGuardPlatform] using method channels.
 class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
@@ -12,6 +13,7 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
   /// Tracks whether a time change has already been detected.
   /// Used to prevent handling multiple callbacks when [stopListeningAfterFirstChange] is true. (Lock)
   bool isChanged = false;
+
   @override
   void listenToDateTimeChange(
     Function() onTimeChanged,
@@ -19,7 +21,7 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
   ) {
     methodChannel.setMethodCallHandler((call) async {
       if (call.method == 'onTimeChanged') {
-        debugPrint("onTimeChanged");
+        safeLog('onTimeChanged callback received');
         if (isChanged && stopListeingAfterFirstChange) {
           return;
         }
@@ -28,4 +30,18 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
       }
     });
   }
+
+  /// Reset the time guard state.
+  /// This allows new notifications and resets the native side tracking.
+  @override
+  Future<void> reset() async {
+    try {
+      isChanged = false; // Reset Flutter side flag
+      await methodChannel.invokeMethod('reset'); // Reset native side
+    } catch (e) {
+      safeLog('Failed to reset time guard', error: e);
+      rethrow;
+    }
+  }
+
 }

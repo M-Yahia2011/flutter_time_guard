@@ -1,3 +1,7 @@
+## 1.2.2
+- Adjusted tolerance value and added false positive example
+- client can now enable or disable logs
+
 ## 1.2.1
 - Fixed stuck on NTP.now().
 
@@ -32,4 +36,3 @@
 - Initial release.
 - Detected manual system time/date changes.
 - Validated device time using NTP.
-

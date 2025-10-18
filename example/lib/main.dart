@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
 void main() {
+  FlutterTimeGuard.configureLogging(enableLogs: true);
   try {
     runApp(const MyApp());
   } catch (e) {
-    debugPrint(e.toString());
+    FlutterTimeGuard.log('Failed to start example app', error: e);
   }
 }
 
@@ -68,7 +69,14 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('OK'),
+                  child: const Text('DismissDialog'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    FlutterTimeGuard.reset();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('ResetListener'),
                 ),
               ],
             ),

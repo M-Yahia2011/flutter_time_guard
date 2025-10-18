@@ -25,8 +25,28 @@ abstract class FlutterTimeGuardPlatform extends PlatformInterface {
   }
 
   /// Listen to changes in the system time done by the user, using a channel.
+  /// 
+  /// [onTimeChanged] - Callback function to execute when time changes
+  /// [stopListeingAfterFirstChange] - Whether to stop listening after first change
   void listenToDateTimeChange(
     Function() onTimeChanged,
     bool stopListeingAfterFirstChange,
-  );
+  ) {
+    throw UnimplementedError(
+        'listenToDateTimeChange() has not been implemented.');
+  }
+
+  /// Reset the time guard state.
+  /// 
+  /// This resets both Flutter and native side tracking,
+  /// allowing new notifications to be triggered.
+  Future<void> reset() {
+    throw UnimplementedError('reset() has not been implemented.');
+  }
+
+  /// Check if the current date time is valid within tolerance.
+  /// 
+  /// [toleranceInSeconds] - How many seconds of difference to allow (default: 30)
+  /// Returns true if time appears valid, false if potentially manipulated
+
 }

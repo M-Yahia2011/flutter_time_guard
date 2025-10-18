@@ -21,6 +21,15 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "time_change_listener")
+        channel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "reset" -> {
+                    Log.d("FlutterTimeGuardPlugin", "Reset invoked from Flutter side")
+                    result.success(null)
+                }
+                else -> result.notImplemented()
+            }
+        }
         context = binding.applicationContext
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)

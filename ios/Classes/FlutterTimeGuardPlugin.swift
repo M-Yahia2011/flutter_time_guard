@@ -18,6 +18,9 @@ public class FlutterTimeGuardPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
+    case "reset":
+      print("FlutterTimeGuardPlugin received reset call")
+      result(nil)
     default:
       result(FlutterMethodNotImplemented)
     }

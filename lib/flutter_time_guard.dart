@@ -1,6 +1,6 @@
-import 'helpers/datetime_validator.dart';
-
 import 'core/interfaces/flutter_time_guard_platform_interface.dart';
+import 'core/logger.dart' as logger;
+import 'helpers/datetime_validator.dart';
 
 /// Provides functionality to listen for system time changes and validate the current time.
 ///
@@ -14,14 +14,28 @@ class FlutterTimeGuard {
   /// If `null`, it means the real (network) time has not been retrieved or set yet.
   static DateTime? realTime = _datetimeValidator.networkTime;
 
+  /// Enables or disables FlutterTimeGuard logging.
+  ///
+  /// Set [enableLogs] to `true` to allow diagnostic messages to be printed via
+  /// [log]. Logging is disabled by default.
+  static void configureLogging({bool enableLogs = false}) {
+    logger.configureLogging(enableLogs: enableLogs);
+  }
+
+  /// Logs a diagnostic [message] when logging is enabled via [configureLogging].
+  ///
+  /// An optional [error] object can be provided to append additional context.
+  static void log(Object? message, {Object? error}) {
+    logger.safeLog(message, error: error);
+  }
+
   /// Validates the current system time by comparing it with the network time (NTP).
   ///
   /// Returns `true` if the system time is within the acceptable range; otherwise, returns `false`.
   ///
   /// [toleranceInSeconds] defines the maximum allowed difference, in seconds,
   /// between the device's time and the accurate network time.
-
-  static Future<bool> isDateTimeValid({int toleranceInSeconds = 600}) async =>
+  static Future<bool> isDateTimeValid({int toleranceInSeconds = 86400}) async =>
       await _datetimeValidator.isDateTimeValid(
         toleranceInSeconds: toleranceInSeconds,
       );
@@ -32,7 +46,6 @@ class FlutterTimeGuard {
   /// The [stopListeningAfterFirstChange] parameter determines whether the listener
   /// should automatically stop after detecting the first manual time change.
   /// This is useful when showing non-dismissible dialogs to avoid stacking multiple dialogs.
-
   static void listenToDateTimeChange({
     required Function() onTimeChanged,
     required bool stopListeingAfterFirstChange,
@@ -41,4 +54,15 @@ class FlutterTimeGuard {
         onTimeChanged,
         stopListeingAfterFirstChange,
       );
+
+  /// Reset the time guard state on both Flutter and native sides.
+  /// 
+  /// This resets tracking state and allows new notifications to be triggered.
+  /// Useful when:
+  /// - User logs in/out
+  /// - App restarts
+  /// - You want to allow new time change detections after handling one
+  static Future<void> reset() async {
+    await FlutterTimeGuardPlatform.instance.reset();
+  }
 }

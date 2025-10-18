@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_time_guard/core/result.dart';
 import 'package:ntp/ntp.dart';
 import '../core/interfaces/ilocal_data_source.dart';
 import '../core/local_data_source_impl.dart';
+import '../core/logger.dart';
 
 /// A singleton class that validates the device's current time
 /// by comparing it with the accurate network time (NTP).
@@ -25,13 +25,20 @@ class DatetimeValidator {
   /// Validates the device's system time by comparing it with the network time (NTP).
   ///
   /// Returns `true` if the difference between the device time and the network time
-  /// is within the specified [toleranceInSeconds]. Defaults to 5 seconds.
-  Future<bool> isDateTimeValid({int toleranceInSeconds = 600}) async {
+  /// is within the specified [toleranceInSeconds]. Defaults to 86400 seconds (24 hours).
+  ///
+  /// When the latest NTP fetch fails but a cached value exists, the cached time is reused.
+  /// If no cached value is available, the method returns `true` to keep the app usable;
+  /// call sites that must fail closed should layer additional checks on top.
+  Future<bool> isDateTimeValid({int toleranceInSeconds = 86400}) async {
     networkTime = await _getNetworkTime();
     DateTime deviceTime = DateTime.now();
-    debugPrint('Device time: $deviceTime');
+    safeLog('Device time: $deviceTime');
     if (networkTime == null) {
-      return false;
+      safeLog(
+        'Network time unavailable; proceeding with device time validation bypass.',
+      );
+      return true;
     }
     // Calculate absolute difference in seconds
     final difference = deviceTime.difference(networkTime!).inSeconds.abs();
@@ -45,20 +52,20 @@ class DatetimeValidator {
   Future<DateTime?> _getNetworkTime() async {
     try {
       DateTime ntpTime = await NTP.now().timeout(
-        const Duration(seconds: 5), // Configurable timeout
+        const Duration(seconds: 20), 
         onTimeout: () {
-          debugPrint('NTP request timed out after 5 seconds');
+          safeLog('NTP request timed out after 20 seconds');
           throw TimeoutException('NTP request timed out', const Duration(seconds: 5));
         },
       );
 
-      debugPrint('Network time: $ntpTime');
+      safeLog('Network time: $ntpTime');
       
       localDataSource.storeNetworkTime(networkTime: ntpTime);
       return ntpTime;
     } catch (e) {
       DateTime? storedNTPTime = await _getNetworkTimeStoredOffline();
-      debugPrint('Stored Network time: $storedNTPTime');
+      safeLog('Stored Network time: $storedNTPTime', error: e);
 
       return storedNTPTime; // fallback to device time
     }
@@ -73,7 +80,7 @@ class DatetimeValidator {
       return null;
     } else if (result is Ok) {
       var r = result as Ok;
-      debugPrint('Stored NTP time: ${r.value}');
+      safeLog('Stored NTP time: ${r.value}');
       return r.value;
     }
     return null;
