@@ -230,4 +230,3 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 [Check my profile](https://github.com/M-Yahia2011)
 
-<meta name="google-site-verification" content="h_Qc7fiiHlKCj_v4w4dLCcLtoKs6vTjnod2z4e9FuLA" />
