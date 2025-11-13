@@ -1,3 +1,6 @@
+## 1.2.3
+- Improve ReadMe.md
+
 ## 1.2.2
 - Adjusted tolerance value and added false positive example
 - client can now enable or disable logs
