@@ -1,3 +1,6 @@
+## 1.2.4
+- Upgrade dependancies and propagate enableLogs flag to native code
+
 ## 1.2.3
 - Improve ReadMe.md
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -42,5 +44,19 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
       safeLog('Failed to reset time guard', error: e);
       rethrow;
     }
+  }
+
+  @override
+  void configureLogging({required bool enableLogs}) {
+    unawaited(
+      methodChannel
+          .invokeMethod<void>('configureLogging', {'enableLogs': enableLogs})
+          .catchError((Object error) {
+            if (error is MissingPluginException) {
+              return;
+            }
+            safeLog('Failed to configure native logging', error: error);
+          }),
+    );
   }
 }

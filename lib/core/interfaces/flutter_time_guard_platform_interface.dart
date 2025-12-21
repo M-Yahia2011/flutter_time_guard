@@ -44,6 +44,12 @@ abstract class FlutterTimeGuardPlatform extends PlatformInterface {
     throw UnimplementedError('reset() has not been implemented.');
   }
 
+  /// Configures native logging when supported.
+  ///
+  /// Native logging is disabled by default and should only be enabled for
+  /// diagnostics.
+  void configureLogging({required bool enableLogs}) {}
+
   /// Check if the current date time is valid within tolerance.
   ///
   /// [toleranceInSeconds] - How many seconds of difference to allow (default: 30)

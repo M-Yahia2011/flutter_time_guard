@@ -11,6 +11,7 @@ public class FlutterTimeGuardPlugin: NSObject, FlutterPlugin {
     let channel = FlutterMethodChannel(name: "time_change_listener", binaryMessenger: registrar.messenger())
     instance.channel = channel
     instance.timeChangeListener = TimeChangeListener(messenger: registrar.messenger())
+    instance.timeChangeListener?.setLoggingEnabled(false)
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
@@ -19,7 +20,11 @@ public class FlutterTimeGuardPlugin: NSObject, FlutterPlugin {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
     case "reset":
-      print("FlutterTimeGuardPlugin received reset call")
+      timeChangeListener?.log("FlutterTimeGuardPlugin received reset call")
+      result(nil)
+    case "configureLogging":
+      let enableLogs = (call.arguments as? [String: Any])?["enableLogs"] as? Bool ?? false
+      timeChangeListener?.setLoggingEnabled(enableLogs)
       result(nil)
     default:
       result(FlutterMethodNotImplemented)

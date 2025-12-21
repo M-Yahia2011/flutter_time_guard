@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_time_guard/flutter_time_guard.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   FlutterTimeGuard.configureLogging(enableLogs: false);
   try {
     runApp(const MyApp());

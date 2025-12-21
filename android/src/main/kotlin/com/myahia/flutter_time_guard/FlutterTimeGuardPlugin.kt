@@ -18,13 +18,20 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
     private lateinit var screenStateReceiver: BroadcastReceiver
     private var isAppInBackground = false
     private var isScreenOn = true
+    private var isLoggingEnabled = false
+    private val logTag = "FlutterTimeGuardPlugin"
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "time_change_listener")
         channel.setMethodCallHandler { call, result ->
             when (call.method) {
+                "configureLogging" -> {
+                    val enableLogs = call.argument<Boolean>("enableLogs") ?: false
+                    isLoggingEnabled = enableLogs
+                    result.success(null)
+                }
                 "reset" -> {
-                    Log.d("FlutterTimeGuardPlugin", "Reset invoked from Flutter side")
+                    log("Reset invoked from Flutter side")
                     result.success(null)
                 }
                 else -> result.notImplemented()
@@ -42,7 +49,7 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
                     action == Intent.ACTION_TIMEZONE_CHANGED ||
                     action == Intent.ACTION_DATE_CHANGED) {
 
-                    Log.d("FlutterTimeGuardPlugin", "Time change detected: $action")
+                    log("Time change detected: $action")
 
                     if (shouldNotify()) {
                         channel.invokeMethod("onTimeChanged", null)
@@ -64,7 +71,7 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val action = intent?.action ?: return
                 isScreenOn = action == Intent.ACTION_SCREEN_ON
-                Log.d("FlutterTimeGuardPlugin", "Screen state changed: ${if (isScreenOn) "ON" else "OFF"}")
+                log("Screen state changed: ${if (isScreenOn) "ON" else "OFF"}")
             }
         }
 
@@ -84,6 +91,12 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
     }
     private fun shouldNotify(): Boolean {
         return isAppInBackground &&  isScreenOn
+    }
+
+    private fun log(message: String) {
+        if (isLoggingEnabled) {
+            Log.d(logTag, message)
+        }
     }
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         context.unregisterReceiver(timeChangeReceiver)

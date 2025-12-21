@@ -13,12 +13,23 @@ import Foundation
 class TimeChangeListener {
   private let methodChannel: FlutterMethodChannel
   private var isScreenOn = true
+  private var isLoggingEnabled = false
 
   init(messenger: FlutterBinaryMessenger) {
     methodChannel = FlutterMethodChannel(
       name: "time_change_listener", binaryMessenger: messenger)
     subscribeToNotifications()
-    print("TimeChangeListener initialized")
+    log("TimeChangeListener initialized")
+  }
+
+  func setLoggingEnabled(_ enabled: Bool) {
+    isLoggingEnabled = enabled
+  }
+
+  func log(_ message: String) {
+    if isLoggingEnabled {
+      print(message)
+    }
   }
 
   /// Clock Change Observer
@@ -51,39 +62,39 @@ class TimeChangeListener {
   }
 
   @objc private func screenWillLock() {
-    print("Screen is locking")
+    log("Screen is locking")
     isScreenOn = false
   }
 
   @objc private func screenDidUnlock() {
-    print("Screen unlocked")
+    log("Screen unlocked")
     isScreenOn = true
   }
 
   @objc private func systemClockDidChange() {
     guard shouldNotify() else {
-      print("Ignored systemClockDidChange due to foreground or screen lock")
+      log("Ignored systemClockDidChange due to foreground or screen lock")
       return
     }
-    print("System clock changed")
+    log("System clock changed")
     methodChannel.invokeMethod("onTimeChanged", arguments: nil)
   }
 
   @objc private func systemTimeZoneDidChange() {
     guard shouldNotify() else {
-      print("Ignored systemTimeZoneDidChange due to foreground or screen lock")
+      log("Ignored systemTimeZoneDidChange due to foreground or screen lock")
       return
     }
 
-    print("System timezone changed")
+    log("System timezone changed")
     methodChannel.invokeMethod("onTimeChanged", arguments: nil)
   }
 
   /// notify if the app is in the background and if the screen is not locked.
   private func shouldNotify() -> Bool {
     let appState = UIApplication.shared.applicationState
-    print("App state: \(appState)")
-    print("Screen state: \(isScreenOn)")
+    log("App state: \(appState)")
+    log("Screen state: \(isScreenOn)")
     return appState == .background && isScreenOn
   }
 

@@ -20,6 +20,7 @@ class FlutterTimeGuard {
   /// [log]. Logging is disabled by default.
   static void configureLogging({bool enableLogs = false}) {
     logger.configureLogging(enableLogs: enableLogs);
+    FlutterTimeGuardPlatform.instance.configureLogging(enableLogs: enableLogs);
   }
 
   /// Logs a diagnostic [message] when logging is enabled via [configureLogging].
