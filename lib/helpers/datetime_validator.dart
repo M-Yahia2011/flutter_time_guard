@@ -20,7 +20,7 @@ class DatetimeValidator {
   final ILocalDataSource localDataSource = LocalDataSource();
 
   /// The network time used as the reference to validate the device's current time.
-  late DateTime? networkTime;
+  DateTime? networkTime;
 
   /// Validates the device's system time by comparing it with the network time (NTP).
   ///
@@ -31,7 +31,7 @@ class DatetimeValidator {
   /// If no cached value is available, the method returns `true` to keep the app usable;
   /// call sites that must fail closed should layer additional checks on top.
   Future<bool> isDateTimeValid({int toleranceInSeconds = 86400}) async {
-    networkTime = await _getNetworkTime();
+    networkTime = await getNetworkTime();
     DateTime deviceTime = DateTime.now();
     safeLog('Device time: $deviceTime');
     if (networkTime == null) {
@@ -49,7 +49,7 @@ class DatetimeValidator {
 
   /// Fetches the current network time using NTP.
   /// Falls back to locally stored NTP time if fetching fails.
-  Future<DateTime?> _getNetworkTime() async {
+  Future<DateTime?> getNetworkTime() async {
     try {
       DateTime ntpTime = await NTP.now().timeout(
         const Duration(seconds: 20),

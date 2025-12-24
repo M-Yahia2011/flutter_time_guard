@@ -38,6 +38,7 @@ class _TimeGuardDemoPageState extends State<TimeGuardDemoPage> {
     setState(() => _isLoading = true);
     // You can pass a toleranceInSeconds argument to check time validity with a tolerance.
     final result = await FlutterTimeGuard.isDateTimeValid();
+    print(await FlutterTimeGuard.realTime);
     setState(() {
       _isValid = result;
       _isLoading = false;

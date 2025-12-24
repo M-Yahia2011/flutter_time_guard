@@ -12,7 +12,7 @@ class FlutterTimeGuard {
   /// The reference time used to validate the current system time.
   ///
   /// If `null`, it means the real (network) time has not been retrieved or set yet.
-  static DateTime? realTime = _datetimeValidator.networkTime;
+  static Future<DateTime?> get realTime => _datetimeValidator.getNetworkTime();
 
   /// Enables or disables FlutterTimeGuard logging.
   ///
