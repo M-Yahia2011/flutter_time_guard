@@ -1,6 +1,6 @@
 name: flutter_time_guard
 description: Flutter plugin that detects manual date/time/timezone changes, validates device clocks against NTP, and prevents clock-tampering in security-critical apps.
-version: 1.2.4
+version: 1.2.5
 homepage: https://github.com/M-Yahia2011/flutter_time_guard.git
 repository: https://github.com/M-Yahia2011/flutter_time_guard
 issue_tracker: https://github.com/M-Yahia2011/flutter_time_guard/issues

@@ -1,3 +1,6 @@
+## 1.2.5
+- Fixed late realTime attribute error
+
 ## 1.2.4
 - Upgrade dependancies and propagate enableLogs flag to native code
 
