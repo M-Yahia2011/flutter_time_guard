@@ -49,14 +49,13 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
   @override
   void configureLogging({required bool enableLogs}) {
     unawaited(
-      methodChannel
-          .invokeMethod<void>('configureLogging', {'enableLogs': enableLogs})
-          .catchError((Object error) {
-            if (error is MissingPluginException) {
-              return;
-            }
-            safeLog('Failed to configure native logging', error: error);
-          }),
+      methodChannel.invokeMethod<void>('configureLogging',
+          {'enableLogs': enableLogs}).catchError((Object error) {
+        if (error is MissingPluginException) {
+          return;
+        }
+        safeLog('Failed to configure native logging', error: error);
+      }),
     );
   }
 }

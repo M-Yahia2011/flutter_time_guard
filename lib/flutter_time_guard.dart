@@ -6,7 +6,7 @@ import 'helpers/datetime_validator.dart';
 ///
 /// Use [FlutterTimeGuard] to detect manual changes to the system time and ensure its accuracy
 /// by comparing it against the network time.
-class FlutterTimeGuard {
+abstract class FlutterTimeGuard {
   static final DatetimeValidator _datetimeValidator = DatetimeValidator();
 
   /// The reference time used to validate the current system time.

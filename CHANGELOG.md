@@ -1,3 +1,7 @@
+## 1.2.6
+- Made FlutterTimeGuard an abstract class to prevent misuse
+- refactored configureLogging for improved readability
+
 ## 1.2.5
 - Fixed late realTime attribute error
 
