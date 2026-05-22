@@ -6,6 +6,8 @@
 .DS_Store
 *.swp
 profile
+.build/
+.swiftpm/
 
 DerivedData/
 build/

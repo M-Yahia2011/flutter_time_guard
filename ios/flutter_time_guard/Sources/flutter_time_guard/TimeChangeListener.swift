@@ -1,15 +1,9 @@
-//
-//  TimeChangeListener.swift
-//  Runner
-//
-//  Created by M.Yahia2011 on 08/06/2025.
-//
-
 import Flutter
 import Foundation
+import UIKit
 
 /// Listens for system clock changes and notifies Flutter via a method channel.
-/// Ignores changes when the app is in the background or if changes occur within 2 seconds of each other.
+/// Only notifies when the app is backgrounded and the screen is unlocked.
 class TimeChangeListener {
   private let methodChannel: FlutterMethodChannel
   private var isScreenOn = true
@@ -90,7 +84,7 @@ class TimeChangeListener {
     methodChannel.invokeMethod("onTimeChanged", arguments: nil)
   }
 
-  /// notify if the app is in the background and if the screen is not locked.
+  /// Notifies only if the app is in the background and the screen is not locked.
   private func shouldNotify() -> Bool {
     let appState = UIApplication.shared.applicationState
     log("App state: \(appState)")

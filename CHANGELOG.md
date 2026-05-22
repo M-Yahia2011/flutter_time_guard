@@ -1,3 +1,7 @@
+## 1.2.7
+- Migrate to SPM
+
+
 ## 1.2.6
 - Made FlutterTimeGuard an abstract class to prevent misuse
 - refactored configureLogging for improved readability

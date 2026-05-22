@@ -42,6 +42,8 @@ Use it for any workflow that depends on real-world time: MFA codes, trials and l
 flutter pub add flutter_time_guard
 ```
 
+On iOS, the plugin supports Flutter's Swift Package Manager integration in Flutter 3.41+ and continues to support CocoaPods for projects that haven't migrated yet.
+
 ## 🚀 Usage
 
 ### ⚠️ Important
@@ -254,4 +256,3 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## 📬 Contact
 
 [Check my profile](https://github.com/M-Yahia2011)
-
