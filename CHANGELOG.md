@@ -1,4 +1,4 @@
-## 1.2.7
+## 1.3.0
 - Migrate to SPM and support Built-in Kotlin.
 - Update minimum supported SDK versions to Flutter 3.44 and Dart 3.12.
 
