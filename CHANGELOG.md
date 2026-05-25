@@ -1,6 +1,6 @@
 ## 1.2.7
-- Migrate to SPM
-
+- Migrate to SPM and support Built-in Kotlin.
+- Update minimum supported SDK versions to Flutter 3.44 and Dart 3.12.
 
 ## 1.2.6
 - Made FlutterTimeGuard an abstract class to prevent misuse
