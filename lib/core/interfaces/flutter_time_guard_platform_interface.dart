@@ -33,7 +33,8 @@ abstract class FlutterTimeGuardPlatform extends PlatformInterface {
     bool stopListeingAfterFirstChange,
   ) {
     throw UnimplementedError(
-        'listenToDateTimeChange() has not been implemented.');
+      'listenToDateTimeChange() has not been implemented.',
+    );
   }
 
   /// Reset the time guard state.
@@ -49,6 +50,12 @@ abstract class FlutterTimeGuardPlatform extends PlatformInterface {
   /// Native logging is disabled by default and should only be enabled for
   /// diagnostics.
   void configureLogging({required bool enableLogs}) {}
+
+  /// Returns platform monotonic elapsed time in milliseconds when available.
+  ///
+  /// The value must not be affected by manual wall-clock changes. Implementations
+  /// may return `null` when monotonic time is unavailable.
+  Future<int?> getMonotonicTimeMillis() async => null;
 
   /// Check if the current date time is valid within tolerance.
   ///

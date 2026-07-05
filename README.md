@@ -48,8 +48,8 @@ On iOS, the plugin supports Flutter's Swift Package Manager integration in Flutt
 
 ### ⚠️ Important
 
-- `isDateTimeValid` reuses the most recent cached NTP response whenever the device is offline.
-- If no cached value exists (fresh install or cleared storage) it returns `true` so the app remains usable—add your own “fail closed” policy if required.
+- `isDateTimeValid` reuses the most recent cached NTP response whenever the device is offline and advances it with platform monotonic elapsed time.
+- If no reliable cached value exists (fresh install, cleared storage, reboot with no NTP, or unavailable monotonic clock) it returns `true` so the app remains usable—add your own “fail closed” policy if required.
 - Adjust `toleranceInSeconds` to match your business rules, whether relaxed for check-ins or strict for credentials.
 - Enable verbose logging while integrating, then turn it off in production unless you need diagnostics.
 
@@ -127,7 +127,7 @@ FlutterTimeGuard.listenToDateTimeChange(
 - Use Flutter Time Guard as the fast client-side signal and confirm sensitive actions on the back end whenever possible.
 - Keep warnings persistent so users cannot dismiss a dialog once and continue indefinitely.
 - Send validation results to analytics to spot regions or devices with chronic clock drift.
-- Document how long cached timestamps remain valid so teams know exactly when offline access should expire.
+- Document how your app should behave when NTP is unavailable after reboot, because the monotonic cache is intentionally treated as invalid in that case.
 
 ## 💡 Example
 

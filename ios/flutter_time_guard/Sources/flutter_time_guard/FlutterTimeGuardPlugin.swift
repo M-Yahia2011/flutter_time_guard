@@ -25,6 +25,9 @@ public class FlutterTimeGuardPlugin: NSObject, FlutterPlugin {
       let enableLogs = (call.arguments as? [String: Any])?["enableLogs"] as? Bool ?? false
       timeChangeListener?.setLoggingEnabled(enableLogs)
       result(nil)
+    case "getMonotonicTimeMillis":
+      let monotonicMillis = Int64(ProcessInfo.processInfo.systemUptime * 1000)
+      result(monotonicMillis)
     default:
       result(FlutterMethodNotImplemented)
     }

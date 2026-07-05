@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.SystemClock
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -33,6 +34,9 @@ class FlutterTimeGuardPlugin : FlutterPlugin, DefaultLifecycleObserver {
                 "reset" -> {
                     log("Reset invoked from Flutter side")
                     result.success(null)
+                }
+                "getMonotonicTimeMillis" -> {
+                    result.success(SystemClock.elapsedRealtime())
                 }
                 else -> result.notImplemented()
             }

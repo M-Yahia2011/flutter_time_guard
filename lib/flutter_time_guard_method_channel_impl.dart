@@ -49,13 +49,35 @@ class MethodChannelFlutterTimeGuard extends FlutterTimeGuardPlatform {
   @override
   void configureLogging({required bool enableLogs}) {
     unawaited(
-      methodChannel.invokeMethod<void>('configureLogging',
-          {'enableLogs': enableLogs}).catchError((Object error) {
-        if (error is MissingPluginException) {
-          return;
-        }
-        safeLog('Failed to configure native logging', error: error);
-      }),
+      methodChannel
+          .invokeMethod<void>('configureLogging', {'enableLogs': enableLogs})
+          .catchError((Object error) {
+            if (error is MissingPluginException) {
+              return;
+            }
+            safeLog('Failed to configure native logging', error: error);
+          }),
     );
+  }
+
+  @override
+  Future<int?> getMonotonicTimeMillis() async {
+    try {
+      final result = await methodChannel.invokeMethod<Object?>(
+        'getMonotonicTimeMillis',
+      );
+      if (result is int) {
+        return result;
+      }
+      if (result is num) {
+        return result.toInt();
+      }
+      return null;
+    } on MissingPluginException {
+      return null;
+    } catch (e) {
+      safeLog('Failed to get platform monotonic time', error: e);
+      return null;
+    }
   }
 }

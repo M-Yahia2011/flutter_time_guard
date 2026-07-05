@@ -150,36 +150,38 @@ void main() {
     });
 
     test(
-        'listenToDateTimeChange triggers callback once when stopping after first change',
-        () async {
-      var callCount = 0;
+      'listenToDateTimeChange triggers callback once when stopping after first change',
+      () async {
+        var callCount = 0;
 
-      methodChannelImplementation.listenToDateTimeChange(
-        () async => callCount++,
-        true,
-      );
+        methodChannelImplementation.listenToDateTimeChange(
+          () async => callCount++,
+          true,
+        );
 
-      await simulatePlatformTimeChanged();
-      await simulatePlatformTimeChanged();
+        await simulatePlatformTimeChanged();
+        await simulatePlatformTimeChanged();
 
-      expect(callCount, 1);
-    });
+        expect(callCount, 1);
+      },
+    );
 
     test(
-        'listenToDateTimeChange triggers callback on every change when not stopping',
-        () async {
-      var callCount = 0;
+      'listenToDateTimeChange triggers callback on every change when not stopping',
+      () async {
+        var callCount = 0;
 
-      methodChannelImplementation.listenToDateTimeChange(
-        () async => callCount++,
-        false,
-      );
+        methodChannelImplementation.listenToDateTimeChange(
+          () async => callCount++,
+          false,
+        );
 
-      await simulatePlatformTimeChanged();
-      await simulatePlatformTimeChanged();
+        await simulatePlatformTimeChanged();
+        await simulatePlatformTimeChanged();
 
-      expect(callCount, 2);
-    });
+        expect(callCount, 2);
+      },
+    );
 
     test('reset clears state and invokes method channel', () async {
       methodChannelImplementation.isChanged = true;
@@ -204,5 +206,30 @@ void main() {
       // isChanged should still be reset even when native call fails to avoid stale lock.
       expect(methodChannelImplementation.isChanged, isFalse);
     });
+
+    test('getMonotonicTimeMillis invokes method channel', () async {
+      messenger.setMockMethodCallHandler(channel, (MethodCall call) async {
+        receivedCalls.add(call);
+        return 12345;
+      });
+
+      final result = await methodChannelImplementation.getMonotonicTimeMillis();
+
+      expect(result, 12345);
+      expect(receivedCalls.length, 1);
+      expect(receivedCalls.single.method, 'getMonotonicTimeMillis');
+    });
+
+    test(
+      'getMonotonicTimeMillis returns null when plugin is missing',
+      () async {
+        messenger.setMockMethodCallHandler(channel, null);
+
+        final result = await methodChannelImplementation
+            .getMonotonicTimeMillis();
+
+        expect(result, isNull);
+      },
+    );
   });
 }

@@ -1,3 +1,9 @@
+## 1.3.1
+- Fixed stale cached datetime false positives after the app remains open/closed for a long time.
+- Cache trusted NTP time with platform monotonic elapsed time and advance the cached reference during offline fallback.
+- Intentionally replaced the old wall-clock-only cache format; old cached `networkTime` values are no longer reused.
+- Documented offline-after-reboot behavior when NTP is unavailable.
+
 ## 1.3.0
 - Migrate to SPM and support Built-in Kotlin.
 - Update minimum supported SDK versions to Flutter 3.44 and Dart 3.12.
