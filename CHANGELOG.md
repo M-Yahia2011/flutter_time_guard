@@ -1,3 +1,6 @@
+## 1.3.2
+- Updated `flutter_secure_storage` and `plugin_platform_interface` dependencies.
+
 ## 1.3.1
 - Fixed stale cached datetime false positives after the app remains open/closed for a long time.
 - Cache trusted NTP time with platform monotonic elapsed time and advance the cached reference during offline fallback.
